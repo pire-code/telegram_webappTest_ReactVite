@@ -55,7 +55,7 @@ export const TgOrder = () => {
                 <TextField label="Filled" variant="filled"
                     helperText="Please enter your name" margin="normal" color='green' autoComplete='false' />
                 <button onClick={
-                    () => MainButton.show()}>Click me, {WebApp.WebAppUser && WebApp.WebAppUser.username}</button>
+                    () => MainButton.show()}>Click me, {WebApp}</button>
         </section>
     </ThemeProvider >
     </>)

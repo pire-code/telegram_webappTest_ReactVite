@@ -63,7 +63,7 @@ export const TgOrder = () => {
     return (<>
         <ThemeProvider theme={theme}>
             <section>
-                <div>Hola, {WebApp.initDataUnsafe.user.first_name} {WebApp.initDataUnsafe.user.last_name}</div>
+                <div>Hola, {WebApp.initDataUnsafe.user.username}</div>
                 <TextField label="Filled" variant="filled"
                     helperText="Please enter your name" margin="normal" color='green' autoComplete='false' />
                 <button onClick={

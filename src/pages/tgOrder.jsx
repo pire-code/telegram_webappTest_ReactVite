@@ -43,6 +43,14 @@ const theme = createTheme({
 export const TgOrder = () => {
     const WebApp = window.Telegram.WebApp;
     console.log(WebApp)
+    
+    var MainButton = WebApp.MainButton;
+    var BackButton = WebApp.BackButton;
+
+    MainButton.show();
+    BackButton.show();
+
+
     return (<>
         <ThemeProvider theme={theme}>
             <section>

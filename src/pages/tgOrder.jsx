@@ -46,11 +46,12 @@ export const TgOrder = () => {
     return (<>
         <ThemeProvider theme={theme}>
             <section>
-                <div onClick={
-                    WebApp.showAlert(`Добро пожаловать, @${WebApp.WebAppUser.username}.`)}>Hola</div>
-            <TextField label="Filled" variant="filled"
-                helperText="Please enter your name" margin="normal" color='green' autoComplete='false' />
-        </section>
-    </ThemeProvider >
+                <div>Hola</div>
+                <TextField label="Filled" variant="filled"
+                    helperText="Please enter your name" margin="normal" color='green' autoComplete='false' />
+                <button onClick={() =>
+                    WebApp.showAlert(`Добро пожаловать, @${WebApp.WebAppUser.username}.`)}>Click me</button>
+            </section>
+        </ThemeProvider >
     </>)
 }

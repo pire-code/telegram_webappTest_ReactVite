@@ -42,7 +42,7 @@ const theme = createTheme({
 
 export const TgOrder = () => {
     const WebApp = window.Telegram.WebApp;
-
+    console.log(WebApp)
     return (<>
         <ThemeProvider theme={theme}>
             <section>

@@ -13,11 +13,19 @@
   height: 100vh;
   background-color: rgb(24, 24, 24);
 }
+
 section {
   display: flex;
   flex-direction: column;
   width: 80%;
 }
+
 .MuiTextField-root {
   color: #Fff;
+}
+
+button {
+  
+  color: var(--tg-theme-button-text-color);
+  background-color: var(--tg-theme-button-color);
 }

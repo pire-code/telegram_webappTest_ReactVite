@@ -8,6 +8,7 @@ function App() {
     <>
       <Routes>
         <Route path='/' element={<TgOrder/>} />
+        <Route path='/telegram_webappTest_ReactVite' element={<TgOrder/>} />
       </Routes>
     </>
   )

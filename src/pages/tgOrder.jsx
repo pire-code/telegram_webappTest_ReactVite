@@ -41,7 +41,7 @@ const theme = createTheme({
 });
 
 export const TgOrder = () => {
-    var WebApp = window.Telegram.WebApp;
+    const WebApp = window.Telegram.WebApp;
 
     return (<>
         <ThemeProvider theme={theme}>

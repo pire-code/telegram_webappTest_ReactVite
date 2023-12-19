@@ -59,16 +59,16 @@ export const TgOrder = () => {
     WebApp.expand()
     var MainButton = WebApp.MainButton;
 
-    
+
     return (<>
         <ThemeProvider theme={theme}>
             <section>
-                <div>Hola</div>
+                <div>Hola, {WebApp.initDataUnsafe.user.first_name} {WebApp.initDataUnsafe.user.last_name}</div>
                 <TextField label="Filled" variant="filled"
                     helperText="Please enter your name" margin="normal" color='green' autoComplete='false' />
                 <button onClick={
                     () => MainButton.show()}>Click me</button>
-                    <span>{WebApp.initDataUnsafe.user.id}</span>
+                    <input type='hidden'>{WebApp.initDataUnsafe.user.id}</input>
         </section>
     </ThemeProvider >
     </>)

@@ -17,6 +17,9 @@ const theme = createTheme({
                     '& label': {
                         color: '#ffffff7f',
                     },
+                    '& label.Mui-focused': {
+                        color: 'var(--tg-theme-button-color)'
+                    },
                     '&, .MuiInputBase-root': {
                         color: '#FFF'
                     },
@@ -33,7 +36,16 @@ const theme = createTheme({
                 root: {
                     '&, &:hover': {
                         background: '#ffffff0f',
-                    }
+                    }, 
+                        '&:before, &:after': {
+                          borderBottom: '2px solid var(--tg-theme-button-color)',
+                        },
+                        '&:hover:not(.Mui-disabled, .Mui-error):before': {
+                          borderBottom: '2px solid var(--tg-theme-button-color)',
+                        },
+                        '&.Mui-focused:after': {
+                          borderBottom: '2px solid var(--tg-theme-button-color)',
+                        },
                 },
             },
         },

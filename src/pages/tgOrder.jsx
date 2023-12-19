@@ -55,11 +55,11 @@ const theme = createTheme({
 export const TgOrder = () => {
     const WebApp = window.Telegram.WebApp;
     console.log(WebApp)
-
+    
+    WebApp.expand()
     var MainButton = WebApp.MainButton;
 
-
-
+    
     return (<>
         <ThemeProvider theme={theme}>
             <section>
@@ -68,7 +68,7 @@ export const TgOrder = () => {
                     helperText="Please enter your name" margin="normal" color='green' autoComplete='false' />
                 <button onClick={
                     () => MainButton.show()}>Click me</button>
-                    <span>{WebApp.WebAppUser}</span>
+                    <span>{WebApp.initDataUnsafe.user.id}</span>
         </section>
     </ThemeProvider >
     </>)

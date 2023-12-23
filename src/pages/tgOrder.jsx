@@ -1,5 +1,8 @@
+/* eslint-disable no-unused-vars */
 import TextField from '@mui/material/TextField';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { MainButton, useShowPopup, useInitData, WebAppProvider  } from '@vkruglikov/react-telegram-web-app';
+
 
 const theme = createTheme({
     palette: {
@@ -53,23 +56,21 @@ const theme = createTheme({
 });
 
 export const TgOrder = () => {
-    const WebApp = window.Telegram.WebApp;
-    console.log(WebApp)
-    
-    WebApp.expand()
-    var MainButton = WebApp.MainButton;
 
+    const [initDataUnsafe, initData] = useInitData();
 
     return (<>
-        <ThemeProvider theme={theme}>
-            <section>
-                <div>Hola, {WebApp.initDataUnsafe.user.username}</div>
-                <TextField label="Filled" variant="filled"
-                    helperText="Please enter your name" margin="normal" color='green' autoComplete='false' />
-                <button onClick={
-                    () => MainButton.show()}>Click me</button>
-                    <input type='hidden'>{WebApp.initDataUnsafe.user.id}</input>
-        </section>
-    </ThemeProvider >
+        <WebAppProvider>
+            <ThemeProvider theme={theme}>
+                <section>
+                    <div>Hola, </div>
+                    <TextField label="Filled" variant="filled"
+                        helperText="Please enter your name" margin="normal" color='green' autoComplete='false' />
+                    <button>Click me</button>
+                        <input type='hidden'></input>
+                        <p>{initData}</p>
+            </section>
+                </ThemeProvider >
+        </WebAppProvider>
     </>)
 }

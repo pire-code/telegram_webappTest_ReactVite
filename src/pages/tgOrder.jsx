@@ -4,7 +4,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import MenuItem from '@mui/material/MenuItem';
 import FormHelperText from '@mui/material/FormHelperText';
 
-import { MainButton, useShowPopup, useInitData, WebAppProvider } from '@vkruglikov/react-telegram-web-app';
+import { MainButton, useShowPopup, useInitData, useExpand, WebAppProvider } from '@vkruglikov/react-telegram-web-app';
 import { useState } from 'react';
 
 
@@ -59,12 +59,13 @@ const theme = createTheme({
         MuiMenuItem: {
             styleOverrides: {
                 root: {
-                    '&.Mui-selected': {
-                        color: '#000',
-                    },
                     '&.MuiMenuItem-root': {
                         color: '#000',
-                    }
+                    },
+                    '&.Mui-selected': {
+                        color: 'var(--tg-theme-button-color)',
+                        background: '#272727'
+                    },
                 }
             }
         },
@@ -84,7 +85,12 @@ const theme = createTheme({
 export const TgOrder = () => {
 
     const [initDataUnsafe, initData] = useInitData();
+    const [isExpanded, expand] = useExpand();
     const [selectedType, setType] = useState('сайт')
+
+    if (!isExpanded) {
+        expand()
+    }
 
     const handleChangeType = (e) => {
         if (e.target.value === 'site') {
@@ -98,12 +104,13 @@ export const TgOrder = () => {
         <WebAppProvider>
             <ThemeProvider theme={theme}>
                 <section>
-                    {initDataUnsafe.user && (<div>Hola, {initDataUnsafe.user.first_name} {initDataUnsafe.user.last_name}</div>)}
+                <h1>Hola{initDataUnsafe.user ? (initDataUnsafe.user.first_name + ' ' + initDataUnsafe.user.last_name) : ('!')}</h1>
                     <TextField
                         id="outlined-select-currency"
                         select
                         label="Что делаем?"
                         fullWidth
+                        margin='normal'
                         variant='filled'
                         defaultValue="site"
                         onChange={(e) => handleChangeType(e)}
@@ -143,6 +150,7 @@ export const TgOrder = () => {
                     </span>
                         <FormHelperText sx={{marginLeft: 1.5, marginTop: 0, marginBottom: 1.5}} id='ht-budget'>Ориентировочный бюджет</FormHelperText>
                 </section>
+                <MainButton text="Отправить"/>
 
             </ThemeProvider >
         </WebAppProvider>

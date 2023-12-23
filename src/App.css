@@ -2,8 +2,13 @@
   padding: 0;
   margin: 0;
   color: #FFF;
+  font-family: "Roboto","Helvetica","Arial",sans-serif;
 }
-
+:root {
+  --tg-theme-text-color: #FFF;
+  --tg-theme-button-color: #02d802;
+  --tg-theme-button-text-color: #272727;
+}
 #root {
   display: flex;
   flex-direction: column;
@@ -22,6 +27,17 @@ section {
 
 .MuiTextField-root {
   color: #Fff;
+}
+
+p {
+  color: var(--tg-theme-text-color);
+}
+
+span {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
 }
 
 button {

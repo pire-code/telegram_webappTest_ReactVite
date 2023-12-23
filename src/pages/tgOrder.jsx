@@ -66,6 +66,14 @@ const theme = createTheme({
                         color: 'var(--tg-theme-button-color)',
                         background: '#272727'
                     },
+                    '&.Mui-selected:hover': {
+                        color: 'var(--tg-theme-button-color)',
+                        background: '#272727'
+                    },
+                    '&.Mui-focusVisible.Mui-selected': {
+                        color: 'var(--tg-theme-button-color)',
+                        background: '#272727'
+                    }
                 }
             }
         },
@@ -104,7 +112,7 @@ export const TgOrder = () => {
         <WebAppProvider>
             <ThemeProvider theme={theme}>
                 <section>
-                <h1>Hola{initDataUnsafe.user ? (initDataUnsafe.user.first_name + ' ' + initDataUnsafe.user.last_name) : ('!')}</h1>
+                <h1>Hola{initDataUnsafe.user && (', ' + initDataUnsafe.user.first_name + ' ' + initDataUnsafe.user.last_name)}!</h1>
                     <TextField
                         id="outlined-select-currency"
                         select
@@ -112,7 +120,6 @@ export const TgOrder = () => {
                         fullWidth
                         margin='normal'
                         variant='filled'
-                        defaultValue="site"
                         onChange={(e) => handleChangeType(e)}
                     >
                         <MenuItem value='site'>Сайт</MenuItem>

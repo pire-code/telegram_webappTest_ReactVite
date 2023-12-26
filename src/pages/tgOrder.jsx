@@ -178,7 +178,7 @@ export const TgOrder = () => {
                                 <MenuItem value='UAH'> ₴ UAH</MenuItem>
                                 <MenuItem value='RUB'> ₽ RUB</MenuItem>
                             </TextField>
-                            <p onClick={onSubmit}>asdasd</p>
+                            <p onClick={onSubmit}>{initDataUnsafe.user && (initDataUnsafe.user.id)}</p>
                         </span>
                         <FormHelperText sx={{ marginLeft: 1.5, marginTop: 0, marginBottom: 1.5 }} id='ht-budget'>Ориентировочный бюджет</FormHelperText>
                     </section>

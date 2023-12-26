@@ -94,15 +94,15 @@ const theme = createTheme({
 
 export const TgOrder = () => {
 
-    const onSubmit = async (data) => {
-        await axios.post('/order', {data: {
+    const onSubmit = async () => {
+        await axios.post('/order', {
             type: type,
             aboutProj: aboutProj,
             textOrder: textOrder,
             vault: vault,
             budget: budget,
             user: initDataUnsafe.user.id
-        }})
+        })
     }
 
     const [initDataUnsafe, initData] = useInitData();
@@ -112,7 +112,7 @@ export const TgOrder = () => {
     const [type, setTypeForm] = useState()
     const [aboutProj, setAboutProj] = useState()
     const [textOrder, setTextOrder] = useState()
-    const [vault, setVault] = useState()
+    const [vault, setVault] = useState('USD')
     const [budget, setBudget] = useState()
 
     if (!isExpanded) {
@@ -150,7 +150,6 @@ export const TgOrder = () => {
                         <TextField label="О проекте" variant="filled" fullWidth
                             onChange={(e) => setAboutProj(e.target.value)}
                             helperText={`Для какого проекта нужен ${selectedType}?`} margin="normal" color='green' multiline rows={2} autoComplete='false' />
-                        {initDataUnsafe.user && (<input type='hidden' value={initDataUnsafe.user.id} />)}
                         <TextField label="Техническое задание" variant="filled"
                             onChange={(e) => setTextOrder(e.target.value)}
                             helperText="Описание того, что вам нужно. Если ещё сами не знаете - не волнуйтесь, я помогу вам с составлением его, в таком случае можете написать основные пожелания или оставить поле пустым ;)"
@@ -179,6 +178,7 @@ export const TgOrder = () => {
                                 <MenuItem value='UAH'> ₴ UAH</MenuItem>
                                 <MenuItem value='RUB'> ₽ RUB</MenuItem>
                             </TextField>
+                            <p onClick={onSubmit}>asdasd</p>
                         </span>
                         <FormHelperText sx={{ marginLeft: 1.5, marginTop: 0, marginBottom: 1.5 }} id='ht-budget'>Ориентировочный бюджет</FormHelperText>
                     </section>

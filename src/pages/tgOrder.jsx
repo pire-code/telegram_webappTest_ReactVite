@@ -8,7 +8,6 @@ import { MainButton, useShowPopup, useInitData, useExpand, WebAppProvider } from
 import { useState } from 'react';
 
 import axios from '../axios.js'
-import { useForm } from 'react-hook-form';
 
 
 const theme = createTheme({
@@ -95,20 +94,33 @@ const theme = createTheme({
 
 export const TgOrder = () => {
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = (data) => {
-        axios.post('/order', data)
+    const onSubmit = async (data) => {
+        await axios.post('/order', {
+            type: type,
+            aboutProj: aboutProj,
+            textOrder: textOrder,
+            vault: vault,
+            budget: budget,
+            user: initDataUnsafe.user.id
+        })
     }
 
     const [initDataUnsafe, initData] = useInitData();
     const [isExpanded, expand] = useExpand();
-    const [selectedType, setType] = useState('сайт')
+    const [selectedType, setType] = useState('сайт');
+
+    const [type, setTypeForm] = useState()
+    const [aboutProj, setAboutProj] = useState()
+    const [textOrder, setTextOrder] = useState()
+    const [vault, setVault] = useState()
+    const [budget, setBudget] = useState()
 
     if (!isExpanded) {
         expand()
     }
 
     const handleChangeType = (e) => {
+        setTypeForm(e.target.value)
         if (e.target.value === 'site') {
             setType('сайт')
         } else if (e.target.value === 'tg') {
@@ -117,13 +129,9 @@ export const TgOrder = () => {
     }
 
 
-    const formSubmit = () => {
-        const form = document.getElementById('form')
-        form.formSubmit()
-    }
 
     return (<>
-        <form onSubmit={handleSubmit(onSubmit)} id='form'>
+        <form id='form'>
             <WebAppProvider>
                 <ThemeProvider theme={theme}>
                     <section>
@@ -136,29 +144,28 @@ export const TgOrder = () => {
                             margin='normal'
                             variant='filled'
                             onChange={(e) => handleChangeType(e)}
-                            {...register("type", { required: true })}
                         >
                             <MenuItem value='site'>Сайт</MenuItem>
                             <MenuItem value='tg'>Телеграм бот</MenuItem>
                         </TextField>
                         <TextField label="О проекте" variant="filled" fullWidth
-                            {...register("aboutProj", { required: true })}
+                            onChange={(e) => setAboutProj(e.target.value)}
                             helperText={`Для какого проекта нужен ${selectedType}?`} margin="normal" color='green' multiline rows={2} autoComplete='false' />
                         {initDataUnsafe.user && (<input type='hidden' value={initDataUnsafe.user.id} />)}
                         <TextField label="Техническое задание" variant="filled"
-
-                            {...register("textOrder", { required: true })}
+                            onChange={(e) => setTextOrder(e.target.value)}
                             helperText="Описание того, что вам нужно. Если ещё сами не знаете - не волнуйтесь, я помогу вам с составлением его, в таком случае можете написать основные пожелания или оставить поле пустым ;)"
                             margin="normal" multiline rows={3} color='green' fullWidth autoComplete='false'
                         />
                         <span>
                             <TextField label="Бюджет"
+                                onChange={(e) => setBudget(e.target.value)}
                                 type="number" variant='filled' margin='normal'
                                 aria-describedby="ht-budget"
                                 autoComplete='off'
-                                sx={{ width: '60%', marginBottom: 0 }}
-                                {...register("budget", {required: true})} />
+                                sx={{ width: '60%', marginBottom: 0 }} />
                             <TextField
+                                onChange={(e) => setVault(e.target.value)}
                                 id="outlined-select-currency"
                                 select
                                 label="Валюта"
@@ -167,7 +174,6 @@ export const TgOrder = () => {
                                 variant='filled'
                                 defaultValue="USD"
                                 sx={{ width: '35%', marginBottom: 0 }}
-                                {...register("vault", {required: true})}
                             >
                                 <MenuItem value='USD'> $ USD</MenuItem>
                                 <MenuItem value='EUR'> € EUR</MenuItem>
@@ -177,7 +183,7 @@ export const TgOrder = () => {
                         </span>
                         <FormHelperText sx={{ marginLeft: 1.5, marginTop: 0, marginBottom: 1.5 }} id='ht-budget'>Ориентировочный бюджет</FormHelperText>
                     </section>
-                    <MainButton text="Отправить" onClick={formSubmit}/>
+                    <MainButton text="Отправить" onClick={onSubmit} />
                 </ThemeProvider >
             </WebAppProvider>
         </form>

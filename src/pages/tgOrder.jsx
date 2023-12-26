@@ -95,11 +95,10 @@ const theme = createTheme({
 
 export const TgOrder = () => {
 
-    const { doOrder, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = (data) => {
         axios.post('/order', data)
     }
-    console.log(errors);
 
     const [initDataUnsafe, initData] = useInitData();
     const [isExpanded, expand] = useExpand();
@@ -117,8 +116,14 @@ export const TgOrder = () => {
         }
     }
 
+
+    const formSubmit = () => {
+        const form = document.getElementById('form')
+        form.formSubmit()
+    }
+
     return (<>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} id='form'>
             <WebAppProvider>
                 <ThemeProvider theme={theme}>
                     <section>
@@ -131,18 +136,18 @@ export const TgOrder = () => {
                             margin='normal'
                             variant='filled'
                             onChange={(e) => handleChangeType(e)}
-                            {...doOrder("type", { required: true })}
+                            {...register("type", { required: true })}
                         >
                             <MenuItem value='site'>Сайт</MenuItem>
                             <MenuItem value='tg'>Телеграм бот</MenuItem>
                         </TextField>
                         <TextField label="О проекте" variant="filled" fullWidth
-                            {...doOrder("aboutProj", { required: true })}
+                            {...register("aboutProj", { required: true })}
                             helperText={`Для какого проекта нужен ${selectedType}?`} margin="normal" color='green' multiline rows={2} autoComplete='false' />
                         {initDataUnsafe.user && (<input type='hidden' value={initDataUnsafe.user.id} />)}
                         <TextField label="Техническое задание" variant="filled"
 
-                            {...doOrder("textOrder", { required: true })}
+                            {...register("textOrder", { required: true })}
                             helperText="Описание того, что вам нужно. Если ещё сами не знаете - не волнуйтесь, я помогу вам с составлением его, в таком случае можете написать основные пожелания или оставить поле пустым ;)"
                             margin="normal" multiline rows={3} color='green' fullWidth autoComplete='false'
                         />
@@ -152,7 +157,7 @@ export const TgOrder = () => {
                                 aria-describedby="ht-budget"
                                 autoComplete='off'
                                 sx={{ width: '60%', marginBottom: 0 }}
-                                {...doOrder("budget", {required: true})} />
+                                {...register("budget", {required: true})} />
                             <TextField
                                 id="outlined-select-currency"
                                 select
@@ -162,7 +167,7 @@ export const TgOrder = () => {
                                 variant='filled'
                                 defaultValue="USD"
                                 sx={{ width: '35%', marginBottom: 0 }}
-                                {...doOrder("vault", {required: true})}
+                                {...register("vault", {required: true})}
                             >
                                 <MenuItem value='USD'> $ USD</MenuItem>
                                 <MenuItem value='EUR'> € EUR</MenuItem>
@@ -172,7 +177,7 @@ export const TgOrder = () => {
                         </span>
                         <FormHelperText sx={{ marginLeft: 1.5, marginTop: 0, marginBottom: 1.5 }} id='ht-budget'>Ориентировочный бюджет</FormHelperText>
                     </section>
-                    <MainButton text="Отправить" type="submit"/>
+                    <MainButton text="Отправить" onClick={formSubmit}/>
                 </ThemeProvider >
             </WebAppProvider>
         </form>

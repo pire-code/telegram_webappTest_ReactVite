@@ -95,14 +95,14 @@ const theme = createTheme({
 export const TgOrder = () => {
 
     const onSubmit = async (data) => {
-        await axios.post('/order', {
+        await axios.post('/order', {data: {
             type: type,
             aboutProj: aboutProj,
             textOrder: textOrder,
             vault: vault,
             budget: budget,
             user: initDataUnsafe.user.id
-        })
+        }})
     }
 
     const [initDataUnsafe, initData] = useInitData();
@@ -131,7 +131,6 @@ export const TgOrder = () => {
 
 
     return (<>
-        <form id='form'>
             <WebAppProvider>
                 <ThemeProvider theme={theme}>
                     <section>
@@ -186,6 +185,5 @@ export const TgOrder = () => {
                     <MainButton text="Отправить" onClick={onSubmit} />
                 </ThemeProvider >
             </WebAppProvider>
-        </form>
     </>)
 }

@@ -7,6 +7,9 @@ import FormHelperText from '@mui/material/FormHelperText';
 import { MainButton, useShowPopup, useInitData, useExpand, WebAppProvider } from '@vkruglikov/react-telegram-web-app';
 import { useState } from 'react';
 
+import axios from '../axios.js'
+import { useForm } from 'react-hook-form';
+
 
 const theme = createTheme({
     palette: {
@@ -92,6 +95,12 @@ const theme = createTheme({
 
 export const TgOrder = () => {
 
+    const { doOrder, handleSubmit, formState: { errors } } = useForm();
+    const onSubmit = (data) => {
+        axios.post('/order', data)
+    }
+    console.log(errors);
+
     const [initDataUnsafe, initData] = useInitData();
     const [isExpanded, expand] = useExpand();
     const [selectedType, setType] = useState('сайт')
@@ -109,35 +118,41 @@ export const TgOrder = () => {
     }
 
     return (<>
-        <WebAppProvider>
-            <ThemeProvider theme={theme}>
-                <section>
-                <h1>Hola{initDataUnsafe.user && (', ' + initDataUnsafe.user.first_name + ' ' + initDataUnsafe.user.last_name)}!</h1>
-                    <TextField
-                        id="outlined-select-currency"
-                        select
-                        label="Что делаем?"
-                        fullWidth
-                        margin='normal'
-                        variant='filled'
-                        onChange={(e) => handleChangeType(e)}
-                    >
-                        <MenuItem value='site'>Сайт</MenuItem>
-                        <MenuItem value='tg'>Телеграм бот</MenuItem>
-                    </TextField>
-                    <TextField label="О проекте" variant="filled" fullWidth
-                        helperText={`Для какого проекта нужен ${selectedType}?`} margin="normal" color='green' multiline rows={2} autoComplete='false' />
-                    {initDataUnsafe.user && (<input type='hidden' value={initDataUnsafe.user.id} />)}
-                    <TextField label="Техническое задание" variant="filled"
-                        helperText="Описание того, что вам нужно. Если ещё сами не знаете - не волнуйтесь, я помогу вам с составлением его, в таком случае можете написать основные пожелания или оставить поле пустым ;)"
-                        margin="normal" multiline rows={3} color='green' fullWidth autoComplete='false' 
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <WebAppProvider>
+                <ThemeProvider theme={theme}>
+                    <section>
+                        <h1>Hola{initDataUnsafe.user && (', ' + initDataUnsafe.user.first_name + ' ' + initDataUnsafe.user.last_name)}!</h1>
+                        <TextField
+                            id="outlined-select-currency"
+                            select
+                            label="Что делаем?"
+                            fullWidth
+                            margin='normal'
+                            variant='filled'
+                            onChange={(e) => handleChangeType(e)}
+                            {...doOrder("type", { required: true })}
+                        >
+                            <MenuItem value='site'>Сайт</MenuItem>
+                            <MenuItem value='tg'>Телеграм бот</MenuItem>
+                        </TextField>
+                        <TextField label="О проекте" variant="filled" fullWidth
+                            {...doOrder("aboutProj", { required: true })}
+                            helperText={`Для какого проекта нужен ${selectedType}?`} margin="normal" color='green' multiline rows={2} autoComplete='false' />
+                        {initDataUnsafe.user && (<input type='hidden' value={initDataUnsafe.user.id} />)}
+                        <TextField label="Техническое задание" variant="filled"
+
+                            {...doOrder("textOrder", { required: true })}
+                            helperText="Описание того, что вам нужно. Если ещё сами не знаете - не волнуйтесь, я помогу вам с составлением его, в таком случае можете написать основные пожелания или оставить поле пустым ;)"
+                            margin="normal" multiline rows={3} color='green' fullWidth autoComplete='false'
                         />
-                    <span>
+                        <span>
                             <TextField label="Бюджет"
-                                type="number"  variant='filled' margin='normal'
+                                type="number" variant='filled' margin='normal'
                                 aria-describedby="ht-budget"
-                                 autoComplete='off'
-                                 sx={{width: '60%', marginBottom: 0}} />
+                                autoComplete='off'
+                                sx={{ width: '60%', marginBottom: 0 }}
+                                {...doOrder("budget", {required: true})} />
                             <TextField
                                 id="outlined-select-currency"
                                 select
@@ -146,20 +161,20 @@ export const TgOrder = () => {
                                 margin='normal'
                                 variant='filled'
                                 defaultValue="USD"
-                                sx={{width: '35%', marginBottom: 0}}
-                                
+                                sx={{ width: '35%', marginBottom: 0 }}
+                                {...doOrder("vault", {required: true})}
                             >
                                 <MenuItem value='USD'> $ USD</MenuItem>
                                 <MenuItem value='EUR'> € EUR</MenuItem>
                                 <MenuItem value='UAH'> ₴ UAH</MenuItem>
                                 <MenuItem value='RUB'> ₽ RUB</MenuItem>
                             </TextField>
-                    </span>
-                        <FormHelperText sx={{marginLeft: 1.5, marginTop: 0, marginBottom: 1.5}} id='ht-budget'>Ориентировочный бюджет</FormHelperText>
-                </section>
-                <MainButton text="Отправить"/>
-
-            </ThemeProvider >
-        </WebAppProvider>
+                        </span>
+                        <FormHelperText sx={{ marginLeft: 1.5, marginTop: 0, marginBottom: 1.5 }} id='ht-budget'>Ориентировочный бюджет</FormHelperText>
+                    </section>
+                    <MainButton text="Отправить" type="submit"/>
+                </ThemeProvider >
+            </WebAppProvider>
+        </form>
     </>)
 }

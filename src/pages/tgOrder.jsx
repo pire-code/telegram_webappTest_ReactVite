@@ -101,7 +101,7 @@ export const TgOrder = () => {
             textOrder: textOrder,
             vault: vault,
             budget: budget,
-            user: initDataUnsafe.user.id
+            user: (initDataUnsafe.user ? (initDataUnsafe.user.id) : (5608674549))
         })
     }
 
@@ -178,7 +178,7 @@ export const TgOrder = () => {
                                 <MenuItem value='UAH'> ₴ UAH</MenuItem>
                                 <MenuItem value='RUB'> ₽ RUB</MenuItem>
                             </TextField>
-                            <p onClick={onSubmit}>{initDataUnsafe.user && (initDataUnsafe.user.id)}</p>
+                            <p onClick={onSubmit}>{initDataUnsafe.user && (initDataUnsafe.user.id)}1</p>
                         </span>
                         <FormHelperText sx={{ marginLeft: 1.5, marginTop: 0, marginBottom: 1.5 }} id='ht-budget'>Ориентировочный бюджет</FormHelperText>
                     </section>
